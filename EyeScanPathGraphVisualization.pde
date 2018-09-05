@@ -32,6 +32,8 @@ void setup() {
 void draw() {
   background(255);
   
+  stroke(0);
+  
   eyeLines = loadStrings("./input/" + str(buttonPosition) + "_" + str(itemPosition) + "_eye.csv");
   eyeData = new float [eyeLines.length][3];
   for (int i = 0; i < eyeLines.length; i++) {
@@ -77,8 +79,33 @@ void draw() {
     line(START_X + UNIT * i, START_Y, START_X + UNIT * i, START_Y + 4);
     fill(0);
     textSize(8);
+    textAlign(CENTER, CENTER);
     text(i * 100, START_X + UNIT * i, START_Y + 10);
   }
+  
+  int top = SCREEN_HEIGHT / 2 - (ITEM_NUM / 4) * buttonPosition * ITEM_HEIGHT - ITEM_HEIGHT * SPACE_ITEM_NUM / 2;
+  
+  // 視線グラフ描画
+  for (int i = 0; i < eyeData.length - 1; i++) {
+    stroke(255, 0, 0);
+    line(START_X + eyeData[i][2] / 4, eyeData[i][1] - top, START_X + eyeData[i + 1][2] / 4, eyeData[i + 1][1] - top);
+  }
+  
+  // グラフ描画
+  for (int i = 0; i < mouseData.length - 1; i++) {
+    stroke(0, 0, 255);
+    line(START_X + mouseData[i][2] / 4, mouseData[i][1] - top, START_X + mouseData[i + 1][2] / 4, mouseData[i + 1][1] - top);
+  }
+  
+  textSize(15);
+  textAlign(LEFT);
+  fill(255, 0, 0);
+  text("red: eye positions", 10, START_Y + 50);
+  fill(0, 0, 255);
+  text("blue: mouse positions", 10, START_Y + 75);
+  fill(255);
+  
+  save("./output/" + str(buttonPosition) + "_" + str(itemPosition) + ".bmp");
   
   
   
