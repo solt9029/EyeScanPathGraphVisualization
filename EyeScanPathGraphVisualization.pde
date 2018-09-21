@@ -40,7 +40,6 @@ void setup() {
     orderData[i][3] = float(items[3]);
     orderData[i][4] = float(items[4]);
     orderData[i][5] = float(items[5]);
-    orderData[i][6] = float(items[6]);
   }
 }
 
@@ -70,18 +69,18 @@ void draw() {
     eyeData[i][2] = eyeData[i][2] - eyeStartTimestamp;
   }
 
-  mouseLines = loadStrings("./input/" + str(buttonPosition) + "_" + str(itemPosition) + "_mouse.csv");
-  mouseData = new float [mouseLines.length][3];
-  for (int i = 0; i < mouseLines.length; i++) {
-    String [] items = split(mouseLines[i], ',');
-    mouseData[i][0] = float(items[0]);
-    mouseData[i][1] = float(items[1]);
-    mouseData[i][2] = float(items[2]);
-  }
-  float mouseStartTimestamp = mouseData[0][2];
-  for (int i = 0; i < mouseData.length; i++) {
-    mouseData[i][2] = mouseData[i][2] - mouseStartTimestamp;
-  }
+  //mouseLines = loadStrings("./input/" + str(buttonPosition) + "_" + str(itemPosition) + "_mouse.csv");
+  //mouseData = new float [mouseLines.length][3];
+  //for (int i = 0; i < mouseLines.length; i++) {
+  //  String [] items = split(mouseLines[i], ',');
+  //  mouseData[i][0] = float(items[0]);
+  //  mouseData[i][1] = float(items[1]);
+  //  mouseData[i][2] = float(items[2]);
+  //}
+  //float mouseStartTimestamp = mouseData[0][2];
+  //for (int i = 0; i < mouseData.length; i++) {
+  //  mouseData[i][2] = mouseData[i][2] - mouseStartTimestamp;
+  //}
   
   // メニュー描画
   fill(255);
@@ -119,10 +118,10 @@ void draw() {
   }
   
   // グラフ描画
-  for (int i = 0; i < mouseData.length - 1; i++) {
-    stroke(0, 0, 255);
-    line(START_X + mouseData[i][2] / 2.5, mouseData[i][1] - top, START_X + mouseData[i + 1][2] / 2.5, mouseData[i + 1][1] - top);
-  }
+  //for (int i = 0; i < mouseData.length - 1; i++) {
+  //  stroke(0, 0, 255);
+  //  line(START_X + mouseData[i][2] / 2.5, mouseData[i][1] - top, START_X + mouseData[i + 1][2] / 2.5, mouseData[i + 1][1] - top);
+  //}
   
   // 探索終了時間に線を引く
   stroke(0);
