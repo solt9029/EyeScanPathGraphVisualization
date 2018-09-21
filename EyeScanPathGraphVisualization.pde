@@ -29,32 +29,11 @@ void settings() {
 
 void setup() {
   textAlign(CENTER, CENTER);
-  
-  orderLines = loadStrings("./input/order.csv");
-  orderData = new float [orderLines.length][7];
-  for (int i = 0; i < orderLines.length; i++) {
-    String [] items = split(orderLines[i], ',');
-    orderData[i][0] = float(items[0]);
-    orderData[i][1] = float(items[1]);
-    orderData[i][2] = float(items[2]);
-    orderData[i][3] = float(items[3]);
-    orderData[i][4] = float(items[4]);
-    orderData[i][5] = float(items[5]);
-  }
 }
 
 void draw() {
   background(255);
-  
   stroke(0);
-  
-  float searchTime = 0;
-  for (int i = 0; i < orderData.length; i++) {
-    if ((int)orderData[i][0] == ITEM_NUM && (int)orderData[i][1] == buttonPosition && (int)orderData[i][2] == itemPosition) {
-      searchTime = orderData[i][4] - orderData[i][3];
-      break;
-    }
-  }
   
   eyeLines = loadStrings("./input/" + str(buttonPosition) + "_" + str(itemPosition) + "_eye.csv");
   eyeData = new float [eyeLines.length][3];
@@ -68,19 +47,6 @@ void draw() {
   for (int i = 0; i < eyeData.length; i++) {
     eyeData[i][2] = eyeData[i][2] - eyeStartTimestamp;
   }
-
-  //mouseLines = loadStrings("./input/" + str(buttonPosition) + "_" + str(itemPosition) + "_mouse.csv");
-  //mouseData = new float [mouseLines.length][3];
-  //for (int i = 0; i < mouseLines.length; i++) {
-  //  String [] items = split(mouseLines[i], ',');
-  //  mouseData[i][0] = float(items[0]);
-  //  mouseData[i][1] = float(items[1]);
-  //  mouseData[i][2] = float(items[2]);
-  //}
-  //float mouseStartTimestamp = mouseData[0][2];
-  //for (int i = 0; i < mouseData.length; i++) {
-  //  mouseData[i][2] = mouseData[i][2] - mouseStartTimestamp;
-  //}
   
   // メニュー描画
   fill(255);
@@ -116,17 +82,6 @@ void draw() {
     stroke(255, 0, 0);
     line(START_X + eyeData[i][2] / 2.5, eyeData[i][1] - top, START_X + eyeData[i + 1][2] / 2.5, eyeData[i + 1][1] - top);
   }
-  
-  // グラフ描画
-  //for (int i = 0; i < mouseData.length - 1; i++) {
-  //  stroke(0, 0, 255);
-  //  line(START_X + mouseData[i][2] / 2.5, mouseData[i][1] - top, START_X + mouseData[i + 1][2] / 2.5, mouseData[i + 1][1] - top);
-  //}
-  
-  // 探索終了時間に線を引く
-  //stroke(0);
-  //line(START_X + searchTime / 2.5, 0, START_X + searchTime / 2.5, START_Y);
-  //println(searchTime);
   
   textSize(15);
   textAlign(LEFT);
