@@ -124,9 +124,9 @@ void draw() {
   //}
   
   // 探索終了時間に線を引く
-  stroke(0);
-  line(START_X + searchTime / 2.5, 0, START_X + searchTime / 2.5, START_Y);
-  println(searchTime);
+  //stroke(0);
+  //line(START_X + searchTime / 2.5, 0, START_X + searchTime / 2.5, START_Y);
+  //println(searchTime);
   
   textSize(15);
   textAlign(LEFT);
