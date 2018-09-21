@@ -13,10 +13,9 @@ final int ITEM_HEIGHT = 26;
 final int ITEM_WIDTH = 26 * 4;
 final int SPACE_ITEM_NUM = 6;
 final int UNIT = 40; // 100ミリ秒あたり
-
 final int BUTTON_NUM = 5;
-
 final int START_X = 20 + ITEM_WIDTH;
+final int [] ITEM_NUMS = {8, 12, 16};
 
 
 void settings() {
@@ -26,7 +25,6 @@ void settings() {
 int buttonPosition = 0;
 int itemPosition = 0;
 int trialDirIndex = 0;
-int [] itemNums = {8, 12, 16};
 int itemNumIndex = 0;
 File inputDir;
 File [] trialDirs;
@@ -38,18 +36,19 @@ void setup() {
 }
 
 void draw() {
+  // .gitignoreとかも混ざっているので、ディレクトリでなければはじくよ
   if (!trialDirs[trialDirIndex].isDirectory()) {
     if (trialDirIndex < trialDirs.length - 1) {
       trialDirIndex++;
+      return;
     }
   }
-  
-  int START_Y = ITEM_HEIGHT * (itemNums[itemNumIndex] + SPACE_ITEM_NUM);
   
   background(255);
   stroke(0);
   
-  eyeLines = loadStrings(trialDirs[trialDirIndex].toString() + "\\" + str(itemNums[itemNumIndex]) + "\\" + str(buttonPosition) + "_" + str(itemPosition) + "_eye.csv");
+  // 視線ファイル読み込み
+  eyeLines = loadStrings(trialDirs[trialDirIndex].toString() + "\\" + str(ITEM_NUMS[itemNumIndex]) + "\\" + str(buttonPosition) + "_" + str(itemPosition) + "_eye.csv");
   eyeData = new float [eyeLines.length][3];
   for (int i = 0; i < eyeLines.length; i++) {
     String [] items = split(eyeLines[i], ',');
@@ -64,8 +63,8 @@ void draw() {
   
   // メニュー描画
   fill(255);
-  rect(10, ITEM_HEIGHT * (SPACE_ITEM_NUM / 2), ITEM_WIDTH, ITEM_HEIGHT * itemNums[itemNumIndex]);
-  for (int i = 0; i < itemNums[itemNumIndex]; i++) {
+  rect(10, ITEM_HEIGHT * (SPACE_ITEM_NUM / 2), ITEM_WIDTH, ITEM_HEIGHT * ITEM_NUMS[itemNumIndex]);
+  for (int i = 0; i < ITEM_NUMS[itemNumIndex]; i++) {
     if (itemPosition == i) {
       fill(255, 0, 0);
       rect(10, ITEM_HEIGHT * (SPACE_ITEM_NUM / 2) + i * ITEM_HEIGHT, ITEM_WIDTH, ITEM_HEIGHT);
@@ -79,38 +78,38 @@ void draw() {
     stroke(0);
   }
   
-  line(START_X, 0, START_X, START_Y);
-  line(START_X, START_Y, WINDOW_WIDTH, START_Y);
+  // グラフ土台を描画
+  int startY = ITEM_HEIGHT * (ITEM_NUMS[itemNumIndex] + SPACE_ITEM_NUM);
+  line(START_X, 0, START_X, startY);
+  line(START_X, startY, WINDOW_WIDTH, startY);
   for (int i = 0; i < 60; i++) {
-    line(START_X + UNIT * i, START_Y, START_X + UNIT * i, START_Y + 4);
+    line(START_X + UNIT * i, startY, START_X + UNIT * i, startY + 4);
     fill(0);
     textSize(8);
     textAlign(CENTER, CENTER);
-    text(i * 100, START_X + UNIT * i, START_Y + 10);
+    text(i * 100, START_X + UNIT * i, startY + 10);
   }
   
-  int top = SCREEN_HEIGHT / 2 - (itemNums[itemNumIndex] / 4) * buttonPosition * ITEM_HEIGHT - ITEM_HEIGHT * SPACE_ITEM_NUM / 2;
-  
   // 視線グラフ描画
+  int top = SCREEN_HEIGHT / 2 - (ITEM_NUMS[itemNumIndex] / 4) * buttonPosition * ITEM_HEIGHT - ITEM_HEIGHT * SPACE_ITEM_NUM / 2;
   for (int i = 0; i < eyeData.length - 1; i++) {
     stroke(255, 0, 0);
     line(START_X + eyeData[i][2] / 2.5, eyeData[i][1] - top, START_X + eyeData[i + 1][2] / 2.5, eyeData[i + 1][1] - top);
   }
   
+  // 説明記述
   textSize(15);
   textAlign(LEFT);
   fill(255, 0, 0);
-  text("red: eye positions", 10, START_Y + 50);
-  fill(0, 0, 255);
-  text("blue: mouse positions", 10, START_Y + 75);
+  text("red: eye positions", 10, startY + 50);
   fill(255);
   
-  save("./output/" + trialDirs[trialDirIndex].getName() + "/" + str(itemNums[itemNumIndex]) + "/" + str(buttonPosition) + "_" + str(itemPosition) + ".bmp");
-  
+  // 保存
+  save("./output/" + trialDirs[trialDirIndex].getName() + "/" + str(ITEM_NUMS[itemNumIndex]) + "/" + str(buttonPosition) + "_" + str(itemPosition) + ".bmp");
   
   // 全てのファイルに対して処理を行う
   itemPosition++;
-  if (itemPosition >= itemNums[itemNumIndex]) {
+  if (itemPosition >= ITEM_NUMS[itemNumIndex]) {
     itemPosition = 0;
     buttonPosition++; 
   }
@@ -119,7 +118,7 @@ void draw() {
     buttonPosition = 0;
     itemNumIndex++;
   }
-  if (itemNumIndex >= itemNums.length) {
+  if (itemNumIndex >= ITEM_NUMS.length) {
     itemPosition = 0;
     buttonPosition = 0;
     itemNumIndex = 0;
