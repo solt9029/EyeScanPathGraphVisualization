@@ -15,10 +15,10 @@ final int SPACE_ITEM_NUM = 4;
 final int UNIT = 20; // 100ミリ秒あたり
 final int BUTTON_NUM = 5;
 final int START_X = 20 + ITEM_WIDTH;
-final int [] ITEM_NUMS = {8, 12, 16};
+final int [] ITEM_NUMS = {9, 13, 17};
 
 void settings() {
-  size(WINDOW_WIDTH, ITEM_HEIGHT * (16 + SPACE_ITEM_NUM) + 100);
+  size(WINDOW_WIDTH, ITEM_HEIGHT * (17 + SPACE_ITEM_NUM) + 100);
 }
 
 int buttonPosition = 0;
@@ -105,7 +105,7 @@ void draw() {
     text(i * 100, START_X + UNIT * i, startY + 15);
   }
 
-  int top = SCREEN_HEIGHT / 2 - (ITEM_NUMS[itemNumIndex] / 4) * buttonPosition * ITEM_HEIGHT - ITEM_HEIGHT * SPACE_ITEM_NUM / 2;
+  int top = SCREEN_HEIGHT / 2 - (ITEM_NUMS[itemNumIndex] / 4) * buttonPosition * ITEM_HEIGHT - ITEM_HEIGHT * SPACE_ITEM_NUM / 2 - ITEM_HEIGHT / 2;
 
   // 視線グラフ描画
   for (int i = 0; i < eyeData.length - 1; i++) {
