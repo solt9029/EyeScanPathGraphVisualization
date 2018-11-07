@@ -105,7 +105,7 @@ void draw() {
     text(i * 100, START_X + UNIT * i, startY + 15);
   }
 
-  int top = SCREEN_HEIGHT / 2 - (ITEM_NUMS[itemNumIndex] / 4) * buttonPosition * ITEM_HEIGHT - ITEM_HEIGHT * SPACE_ITEM_NUM / 2 - ITEM_HEIGHT / 2;
+  int top = SCREEN_HEIGHT / 2 - ((ITEM_NUMS[itemNumIndex] - 1) / 4) * buttonPosition * ITEM_HEIGHT - ITEM_HEIGHT * SPACE_ITEM_NUM / 2 - ITEM_HEIGHT / 2;
 
   // 視線グラフ描画
   for (int i = 0; i < eyeData.length - 1; i++) {
