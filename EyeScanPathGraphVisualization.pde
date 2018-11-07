@@ -11,8 +11,8 @@ float [][] orderData;
 
 final int ITEM_HEIGHT = 26;
 final int ITEM_WIDTH = 26 * 4;
-final int SPACE_ITEM_NUM = 10;
-final int UNIT = 40; // 100ミリ秒あたり
+final int SPACE_ITEM_NUM = 4;
+final int UNIT = 20; // 100ミリ秒あたり
 final int BUTTON_NUM = 5;
 final int START_X = 20 + ITEM_WIDTH;
 final int [] ITEM_NUMS = {8, 12, 16};
@@ -78,7 +78,7 @@ void draw() {
   rect(10, ITEM_HEIGHT * (SPACE_ITEM_NUM / 2), ITEM_WIDTH, ITEM_HEIGHT * ITEM_NUMS[itemNumIndex]);
   for (int i = 0; i < ITEM_NUMS[itemNumIndex]; i++) {
     if (itemPosition == i) {
-      fill(255, 0, 0);
+      fill(0, 0, 255);
       rect(10, ITEM_HEIGHT * (SPACE_ITEM_NUM / 2) + i * ITEM_HEIGHT, ITEM_WIDTH, ITEM_HEIGHT);
       fill(255);
     } else {
@@ -94,36 +94,39 @@ void draw() {
   int startY = ITEM_HEIGHT * (ITEM_NUMS[itemNumIndex] + SPACE_ITEM_NUM);
   line(START_X, 0, START_X, startY);
   line(START_X, startY, WINDOW_WIDTH, startY);
-  for (int i = 0; i < 60; i++) {
+  for (int i = 0; i < 100; i++) {
     line(START_X + UNIT * i, startY, START_X + UNIT * i, startY + 4);
+    if (i % 2 == 1) {
+      continue;
+    }
     fill(0);
-    textSize(8);
+    textSize(10);
     textAlign(CENTER, CENTER);
-    text(i * 100, START_X + UNIT * i, startY + 10);
+    text(i * 100, START_X + UNIT * i, startY + 15);
   }
 
   int top = SCREEN_HEIGHT / 2 - (ITEM_NUMS[itemNumIndex] / 4) * buttonPosition * ITEM_HEIGHT - ITEM_HEIGHT * SPACE_ITEM_NUM / 2;
 
   // 視線グラフ描画
   for (int i = 0; i < eyeData.length - 1; i++) {
-    stroke(255, 0, 0);
-    line(START_X + eyeData[i][2] / 2.5, eyeData[i][1] - top, START_X + eyeData[i + 1][2] / 2.5, eyeData[i + 1][1] - top);
+    stroke(255, 0, 255);
+    line(START_X + eyeData[i][2] / (100 / UNIT), eyeData[i][1] - top, START_X + eyeData[i + 1][2] / (100 / UNIT), eyeData[i + 1][1] - top);
   }
 
   // マウスグラフ描画
   for (int i = 0; i < mouseData.length - 1; i++) {
-    stroke(0, 0, 255);
-    line(START_X + mouseData[i][2] / 2.5, mouseData[i][1] - top, START_X + mouseData[i + 1][2] / 2.5, mouseData[i + 1][1] - top);
+    stroke(0, 255, 0);
+    line(START_X + mouseData[i][2] / (100 / UNIT), mouseData[i][1] - top, START_X + mouseData[i + 1][2] / (100 / UNIT), mouseData[i + 1][1] - top);
   }
 
   // 説明記述
-  textSize(15);
-  textAlign(LEFT);
-  fill(255, 0, 0);
-  text("red: eye positions", 10, startY + 50);
-  fill(0, 0, 255);
-  text("blue: mouse positions", 10, startY + 75);
-  fill(255);
+  //textSize(15);
+  //textAlign(LEFT);
+  //fill(255, 0, 255);
+  //text("red: eye positions", 10, startY + 50);
+  //fill(0, 255, 255);
+  //text("blue: mouse positions", 10, startY + 75);
+  //fill(255);
 
   // 保存
   save("./output/" + trialDirs[trialDirIndex].getName() + "/" + str(ITEM_NUMS[itemNumIndex]) + "/" + str(buttonPosition) + "_" + str(itemPosition) + ".bmp");
